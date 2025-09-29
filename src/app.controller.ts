@@ -8,23 +8,23 @@ export class AppController {
 
   @All('/auth/*')
   public async requestSecurity(@Req() request: Request) {
-    return this.appService.requestMicroservice(request.url, request.method, request.body);
+    return this.appService.requestMicroservice(request.url, request.method, request.body, request);
   }
 
   @All('/users/*')
   public async requestUsers(@Req() request: Request) {
-    return this.appService.requestMicroservice(request.url, request.method, request.body);
+    return this.appService.requestMicroservice(request.url, request.method, request.body, request);
   }
 
   @All('/performers/*')
   public async requestPerformers(@Req() request: Request) {
     
-    return this.appService.requestMicroservice(request.url, request.method, request.body);
+    return this.appService.requestMicroservice(request.url, request.method, request.body, request);
   }
 
   @All('/albums/*')
   public async requestAlbums(@Req() request: Request) {
-    return this.appService.requestMicroservice(request.url, request.method, request.body);
+    return this.appService.requestMicroservice(request.url, request.method, request.body, request);
   }
 
   @All('/songs/*')
@@ -37,17 +37,17 @@ export class AppController {
 
   @All('/fav-songs/*')
   public async requestFavSongs(@Req() request: Request) {
-    return this.appService.requestMicroservice(request.url, request.method, request.body);
+    return this.appService.requestMicroservice(request.url, request.method, request.body, request);
   }
 
   @All('/fav-albums/*')
   public async requestFavAlbums(@Req() request: Request) {
-    return this.appService.requestMicroservice(request.url, request.method, request.body);
+    return this.appService.requestMicroservice(request.url, request.method, request.body, request);
   }
 
   @All('/fav-performers/*')
   public async requestFavPerformers(@Req() request: Request) {
-    return this.appService.requestMicroservice(request.url, request.method, request.body);
+    return this.appService.requestMicroservice(request.url, request.method, request.body, request);
   }
 
 }

@@ -17,12 +17,15 @@ export class AppService {
   constructor(private readonly httpService: HttpService) {}
    
 
-  public async requestMicroservice(url: string, method: string, body: any): Promise<any> {
+  public async requestMicroservice(url: string, method: string, body: any, request: any): Promise<any> {
     try {
       url = this.UrlBuilder(url);
       console.log(url);
       console.log(body);
-      const response = await firstValueFrom(this.httpService.request({url, method: method, data: body}));
+      const token = request.headers.authorization;
+      const response = await firstValueFrom(this.httpService.request({url, method: method, data: body, headers: {
+        Authorization: token
+      }}));
   
       return (await response).data;
     } catch (error) {
