@@ -1,18 +1,17 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import axios from 'axios';
 import { firstValueFrom } from 'rxjs';
+import { performersServiceConfiguration, securityServiceConfiguration, usersServiceConfiguration } from './constants/environments.configuration';
 
 @Injectable()
 export class AppService {
 
-  private performers = 'http://performers-service:3000';
-  private albums = 'http://performers-service:3000';
-  private songs = 'http://performers-service:3000';
-  private favorites = 'http://favorites-service:3000';
-  private users = 'http://users-service:5077';
+  private performers = performersServiceConfiguration.url;
+  private albums = performersServiceConfiguration.url;
+  private songs = performersServiceConfiguration.url;
+  private users = usersServiceConfiguration.url;
 
-  private security = 'http://security-service:5261';
+  private security = securityServiceConfiguration.url;
 
   constructor(private readonly httpService: HttpService) {}
    
@@ -20,8 +19,6 @@ export class AppService {
   public async requestMicroservice(url: string, method: string, body: any, request: any): Promise<any> {
     try {
       url = this.UrlBuilder(url);
-      console.log(url);
-      console.log(body);
       const token = request.headers.authorization;
       const response = await firstValueFrom(this.httpService.request({url, method: method, data: body, headers: {
         Authorization: token
@@ -33,21 +30,6 @@ export class AppService {
     }
   }
 
-  public async requestSongs(url: string, method: string, body: any, file: Express.Multer.File): Promise<any> {
-      
-      console.log(url);
-      url = this.UrlBuilder(url);
-      console.log(url);
-      console.log(body);
-      console.log(file);
-      console.log(method);
-      if (method === 'POST') {
-        /* const response = await axios.post('http://performers-service:3000/songs/add', {file: file, body: body});
-        console.log(response); */
-        const response = await firstValueFrom(this.httpService.request({url, method: method, data: {file, body}}));
-      }
-      //const response = await firstValueFrom(this.httpService.request({url, method: method, data: body}));
-  }
 
   public UrlBuilder(url: string): string {
     if (url.startsWith('/performers')) {
@@ -58,9 +40,6 @@ export class AppService {
     }
     if (url.startsWith('/songs')) {
       return this.songs + url;
-    }
-    if (url.startsWith('/fav')) {
-      return this.favorites + url;
     }
     if (url.startsWith('/users')) {
       return this.users + url;
