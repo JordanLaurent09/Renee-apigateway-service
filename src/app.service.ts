@@ -23,10 +23,10 @@ export class AppService {
       const response = await firstValueFrom(this.httpService.request({url, method: method, data: body, headers: {
         Authorization: token
       }}));
-  
       return (await response).data;
     } catch (error) {
       console.log(error);
+      return { status: error.status, message: error.response.data }
     }
   }
 
